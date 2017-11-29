@@ -19,8 +19,8 @@ class ClientNetworkCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\ClientNetwork');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/clientnetwork');
-        $this->crud->setEntityNameStrings('clientnetwork', 'client_networks');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/clientNetwork');
+        $this->crud->setEntityNameStrings('client network', 'client networks');
 
         /*
         |--------------------------------------------------------------------------
@@ -36,6 +36,23 @@ class ClientNetworkCrudController extends CrudController
         // $this->crud->removeField('name', 'update/create/both');
         // $this->crud->removeFields($array_of_names, 'update/create/both');
 
+        $this->crud->addField([
+            'label' => "Client",
+            'type' => 'select',
+            'name' => 'client_id',
+            'attribute' => 'name',
+            'model' => 'App\Models\Client'
+        ]);
+
+        $this->crud->addField([
+            'label' => "Network",
+            'type' => 'select',
+            'name' => 'network_id',
+            'attribute' => 'name',
+            'model' => 'App\Models\Network'
+        ]);
+
+
         // ------ CRUD COLUMNS
         // $this->crud->addColumn(); // add a single column, at the end of the stack
         // $this->crud->addColumns(); // add multiple columns, at the end of the stack
@@ -43,6 +60,20 @@ class ClientNetworkCrudController extends CrudController
         // $this->crud->removeColumns(['column_name_1', 'column_name_2']); // remove an array of columns from the stack
         // $this->crud->setColumnDetails('column_name', ['attribute' => 'value']); // adjusts the properties of the passed in column (by name)
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
+
+        $this->crud->setColumnDetails('client_id', [
+            'label' => "Client",
+            'type' => "select",
+            'entity' => 'client', // the method that defines the relationship in your Model
+            'attribute' => "name", // foreign key attribute that is shown to user
+        ]);
+
+        $this->crud->setColumnDetails('network_id', [
+            'label' => "Network",
+            'type' => "select",
+            'entity' => 'network', // the method that defines the relationship in your Model
+            'attribute' => "name", // foreign key attribute that is shown to user
+        ]);
 
         // ------ CRUD BUTTONS
         // possible positions: 'beginning' and 'end'; defaults to 'beginning' for the 'line' stack, 'end' for the others;

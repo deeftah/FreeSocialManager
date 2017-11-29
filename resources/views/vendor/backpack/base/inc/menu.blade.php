@@ -25,6 +25,7 @@
             <li><a href="{{ route('backpack.auth.register') }}">{{ trans('backpack::base.register') }}</a></li>
             @endif
         @else
+            <li><a href="{{ backpack_url('publish') }}"><i class="fa fa-pencil"></i> <span>Publish</span></a></li>
             <li><a href="{{ route('backpack.auth.logout') }}"><i class="fa fa-btn fa-sign-out"></i> {{ trans('backpack::base.logout') }}</a></li>
         @endif
        @endif
