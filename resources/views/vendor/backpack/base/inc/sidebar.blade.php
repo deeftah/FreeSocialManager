@@ -21,7 +21,10 @@
           <!-- ================================================ -->
           <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
           <li><a href="{{  backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
-
+          <li><a href="{{ backpack_url('client') }}"><i class="fa fa-address-card-o"></i> <span>Clients</span></a></li>
+          <li><a href="{{ backpack_url('network') }}"><i class="fa fa-globe"></i> <span>Networks</span></a></li>
+          <li><a href="{{ backpack_url('clientNetwork') }}"><i class="fa fa-link"></i> <span>Client Networks</span></a></li>
+          <li><a href="{{ backpack_url('publish') }}"><i class="fa fa-pencil"></i> <span>Publish</span></a></li>
           <!-- ======================================= -->
           {{-- <li class="header">Other menus</li> --}}
         </ul>
