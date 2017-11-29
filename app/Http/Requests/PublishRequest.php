@@ -27,7 +27,7 @@ class PublishRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
         return [
             'client_id' => 'required|integer',
             'title' => 'required|min:3|max:255',
-            'datetime' => 'required|datetime',
+            'datetime' => 'required|date',
             'status' => 'required|boolean'
         ];
     }

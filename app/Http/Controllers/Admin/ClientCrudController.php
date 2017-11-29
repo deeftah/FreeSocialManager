@@ -36,7 +36,7 @@ class ClientCrudController extends CrudController
         // $this->crud->removeField('name', 'update/create/both');
         // $this->crud->removeFields($array_of_names, 'update/create/both');
 
-        $this->crud->addField([   // Checkbox
+        $this->crud->addField([
             'name' => 'status',
             'label' => 'Active',
             'type' => 'checkbox'
@@ -52,7 +52,6 @@ class ClientCrudController extends CrudController
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
 
         $this->crud->setColumnDetails('status', [
-            'name' => 'status',
             'label' => 'Active',
             'type' => 'boolean',
         ]);

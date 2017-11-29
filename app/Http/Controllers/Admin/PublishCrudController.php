@@ -20,7 +20,7 @@ class PublishCrudController extends CrudController
         */
         $this->crud->setModel('App\Models\Publish');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/publish');
-        $this->crud->setEntityNameStrings('publish', 'publishes');
+        $this->crud->setEntityNameStrings('publish', 'publish');
 
         /*
         |--------------------------------------------------------------------------
@@ -36,6 +36,38 @@ class PublishCrudController extends CrudController
         // $this->crud->removeField('name', 'update/create/both');
         // $this->crud->removeFields($array_of_names, 'update/create/both');
 
+        $this->crud->removeField('published', 'update/create/both');
+        $this->crud->addField([
+            'label' => "Client",
+            'type' => 'select',
+            'name' => 'client_id',
+            'attribute' => 'name',
+            'model' => 'App\Models\Client'
+        ]);
+        $this->crud->addField([
+            'name' => 'status',
+            'label' => 'Active',
+            'type' => 'checkbox'
+        ]);
+        $this->crud->addField([
+            'name' => 'datetime',
+            'label' => 'Date & Time',
+            'type' => 'datetime_picker',
+            'datetime_picker_options' => [
+                'format' => 'DD/MM/YYYY HH:mm',
+                'language' => 'en',
+            ]
+        ]);
+        $this->crud->addField([
+            'label' => "Image",
+            'name' => "image",
+            'type' => 'image',
+            'upload' => true,
+            'crop' => false,
+            'prefix' => 'uploads' // in case you only store the filename in the database, this text will be prepended to the database value
+        ]);
+
+
         // ------ CRUD COLUMNS
         // $this->crud->addColumn(); // add a single column, at the end of the stack
         // $this->crud->addColumns(); // add multiple columns, at the end of the stack
@@ -43,6 +75,22 @@ class PublishCrudController extends CrudController
         // $this->crud->removeColumns(['column_name_1', 'column_name_2']); // remove an array of columns from the stack
         // $this->crud->setColumnDetails('column_name', ['attribute' => 'value']); // adjusts the properties of the passed in column (by name)
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
+
+        $this->crud->removeColumns(['image', 'description']);
+        $this->crud->setColumnDetails('client_id', [
+            'label' => "Client",
+            'type' => "select",
+            'entity' => 'client',
+            'attribute' => "name",
+        ]);
+        $this->crud->setColumnDetails('status', [
+            'label' => 'Active',
+            'type' => 'boolean',
+        ]);
+        $this->crud->setColumnDetails('published', [
+            'label' => 'Published',
+            'type' => 'boolean',
+        ]);
 
         // ------ CRUD BUTTONS
         // possible positions: 'beginning' and 'end'; defaults to 'beginning' for the 'line' stack, 'end' for the others;

@@ -14,7 +14,7 @@ class AddPublishedToPublishNetworksTable extends Migration
     public function up()
     {
         Schema::table('publish_networks', function (Blueprint $table) {
-            $table->boolean('published');
+            $table->boolean('published')->default(0);
         });
     }
 
