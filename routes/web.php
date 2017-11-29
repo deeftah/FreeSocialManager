@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group([
+    'prefix' => config('backpack.base.route_prefix', 'admin'),
+    'middleware' => ['admin'],
+    'namespace' => 'Admin'
+], function() {
+    // your CRUD resources and other admin routes here
+    CRUD::resource('client', 'ClientCrudController');
+    CRUD::resource('network', 'NetworkCrudController');
+    CRUD::resource('clientNetwork', 'ClientNetworkCrudController');
+    CRUD::resource('publish', 'PublishCrudController');
+    CRUD::resource('publishNetwork', 'PublishNetworkCrudController');
+});

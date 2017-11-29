@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
-use App\Http\Requests\Publish_networkRequest as StoreRequest;
-use App\Http\Requests\Publish_networkRequest as UpdateRequest;
+use App\Http\Requests\ClientNetworkRequest as StoreRequest;
+use App\Http\Requests\ClientNetworkRequest as UpdateRequest;
 
-class Publish_networkCrudController extends CrudController
+class ClientNetworkCrudController extends CrudController
 {
     public function setup()
     {
@@ -18,9 +18,9 @@ class Publish_networkCrudController extends CrudController
         | BASIC CRUD INFORMATION
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Publish_network');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/publish_network');
-        $this->crud->setEntityNameStrings('publish_network', 'publish_networks');
+        $this->crud->setModel('App\Models\ClientNetwork');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/clientnetwork');
+        $this->crud->setEntityNameStrings('clientnetwork', 'client_networks');
 
         /*
         |--------------------------------------------------------------------------
