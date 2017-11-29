@@ -25,7 +25,8 @@ class PublishNetworkRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'publish_id' => 'required|integer',
+            'network_id' => 'required|integer'
         ];
     }
 
