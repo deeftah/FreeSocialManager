@@ -1,4 +1,4 @@
-# FreeSocialManager
+# Free Social Manager
 
 The First Free Open Source Social Network Manager
 
