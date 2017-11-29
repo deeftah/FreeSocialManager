@@ -66,16 +66,13 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-                <a href="{{ route('register') }}">Register</a>
-                @endauth
-        </div>
-    @endif
+    <div class="top-right links">
+        @auth
+        <a href="{{ backpack_url('dashboard') }}">Dashboard</a>
+        @else
+            <a href="{{ backpack_url('login') }}">Login</a>
+            @endauth
+    </div>
 
     <div class="content">
         <div class="title m-b-md">
@@ -86,7 +83,5 @@
             <a href="https://github.com/hojjabr/FreeSocialManager/blob/master/README.md">Documentation</a>
             <a href="https://github.com/hojjabr/FreeSocialManager">GitHub</a>
         </div>
-    </div>
-</div>
 </body>
 </html>
