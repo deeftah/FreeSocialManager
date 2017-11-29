@@ -9,4 +9,5 @@ The First Free Open Source Social Network Manager
 - Install the required packages using composer `composer install` (app root)
 - `chmod -R o+w` the `storage` and `bootstrap/cache` directories
 - `php artisan migrate`
+- create the following cronjob `* * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1`
 
