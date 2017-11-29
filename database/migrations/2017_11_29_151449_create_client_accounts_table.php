@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientNetworksTable extends Migration
+class CreateClientAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +12,19 @@ class CreateClientNetworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_networks', function (Blueprint $table) {
+        // TODO: use JSON data type for 'extras' instead of string
+        Schema::create('client_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('network_id')->unsigned();
             $table->foreign('network_id')->references('id')->on('networks');
+            $table->string('name');
+            $table->string('template');
+            $table->longText('extras');
+            $table->boolean('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +35,6 @@ class CreateClientNetworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_networks');
+        Schema::drop('client_accounts');
     }
 }

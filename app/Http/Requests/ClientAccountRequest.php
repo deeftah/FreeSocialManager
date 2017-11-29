@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ClientNetworkRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
+class ClientAccountRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class ClientNetworkRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
      */
     public function rules()
     {
+        $id = \Request::get('id');
+
         return [
-            'client_id' => 'required|integer',
-            'network_id' => 'required|integer'
+            'name' => 'required|min:2|max:255',
         ];
     }
 

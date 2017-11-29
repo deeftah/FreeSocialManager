@@ -2,26 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
+use Illuminate\Database\Eloquent\Model;
 
-class ClientNetwork extends Model
+class ClientAccount extends Model
 {
     use CrudTrait;
 
     /*
-   |--------------------------------------------------------------------------
-   | GLOBAL VARIABLES
-   |--------------------------------------------------------------------------
-   */
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
 
-    //protected $table = 'client_networks';
-    //protected $primaryKey = 'id';
-    // public $timestamps = false;
+    protected $table = 'client_accounts';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     // protected $guarded = ['id'];
-    protected $fillable = ['client_id', 'network_id'];
+    protected $fillable = ['template', 'name', 'extras'];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $fakeColumns = ['extras'];
+
 
     /*
     |--------------------------------------------------------------------------
@@ -29,21 +31,16 @@ class ClientNetwork extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getTemplateName()
+    {
+        return trim(preg_replace('/(id|at|\[\])$/i', '', ucfirst(str_replace('_', ' ', $this->template))));
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function client()
-    {
-        return $this->hasOne('App\Models\Client', 'id', 'client_id');
-    }
-
-    public function network()
-    {
-        return $this->hasOne('App\Models\Network', 'id', 'network_id');
-    }
 
     /*
     |--------------------------------------------------------------------------
