@@ -36,13 +36,26 @@ class ClientCrudController extends CrudController
         // $this->crud->removeField('name', 'update/create/both');
         // $this->crud->removeFields($array_of_names, 'update/create/both');
 
+        $this->crud->addField([   // Checkbox
+            'name' => 'status',
+            'label' => 'Active',
+            'type' => 'checkbox'
+        ]);
+
         // ------ CRUD COLUMNS
+
         // $this->crud->addColumn(); // add a single column, at the end of the stack
         // $this->crud->addColumns(); // add multiple columns, at the end of the stack
         // $this->crud->removeColumn('column_name'); // remove a column from the stack
         // $this->crud->removeColumns(['column_name_1', 'column_name_2']); // remove an array of columns from the stack
         // $this->crud->setColumnDetails('column_name', ['attribute' => 'value']); // adjusts the properties of the passed in column (by name)
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
+
+        $this->crud->setColumnDetails('status', [
+            'name' => 'status',
+            'label' => 'Active',
+            'type' => 'boolean',
+        ]);
 
         // ------ CRUD BUTTONS
         // possible positions: 'beginning' and 'end'; defaults to 'beginning' for the 'line' stack, 'end' for the others;

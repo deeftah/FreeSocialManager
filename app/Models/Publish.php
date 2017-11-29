@@ -15,7 +15,7 @@ class Publish extends Model
     |--------------------------------------------------------------------------
     */
 
-    //protected $table = 'publishs';
+    protected $table = 'publish';
     //protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
