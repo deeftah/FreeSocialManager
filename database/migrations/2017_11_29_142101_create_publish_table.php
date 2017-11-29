@@ -15,12 +15,12 @@ class CreatePublishTable extends Migration
     {
         Schema::create('publish', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id')->unsigned();
-            $table->foreign('client_id')->references('id')->on('clients');
             $table->string('title');
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->dateTime('datetime');
+            $table->boolean('status');
+            $table->boolean('published')->default(0);
             $table->timestamps();
         });
     }

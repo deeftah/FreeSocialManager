@@ -25,7 +25,6 @@ class PublishRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            'client_id' => 'required|integer',
             'title' => 'required|min:3|max:255',
             'datetime' => 'required|date',
             'status' => 'required|boolean'

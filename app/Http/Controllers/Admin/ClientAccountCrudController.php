@@ -53,6 +53,13 @@ class ClientAccountCrudController extends CrudController
         // - default fields, that all templates are using, are set using $this->addDefaultPageFields();
         // - template-specific fields are set per-template, in the ClientAccountTemplates trait;
 
+        $this->crud->addField([
+            'label' => "Client",
+            'type' => 'select',
+            'name' => 'client_id',
+            'attribute' => 'name',
+            'model' => 'App\Models\Client'
+        ]);
     }
 
     // -----------------------------------------------

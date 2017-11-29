@@ -24,10 +24,9 @@ class ClientAccountRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
      */
     public function rules()
     {
-        $id = \Request::get('id');
-
         return [
             'name' => 'required|min:2|max:255',
+            'template' => 'required'
         ];
     }
 

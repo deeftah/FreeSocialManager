@@ -20,49 +20,49 @@ trait ClientAccountTemplates
     private function telegram()
     {
         $this->crud->addField([   // CustomHTML
-                        'name' => 'metas_separator',
-                        'type' => 'custom_html',
-                        'value' => '<br><h2>'.trans('backpack::pagemanager.metas').'</h2><hr>',
-                    ]);
+            'name' => 'metas_separator',
+            'type' => 'custom_html',
+            'value' => '<br><h2>Extras</h2><hr>',
+        ]);
         $this->crud->addField([
-                        'name' => 'meta_title',
-                        'label' => trans('backpack::pagemanager.meta_title'),
-                        'fake' => true,
-                        'store_in' => 'extras',
-                    ]);
+            'name' => 'channel_username',
+            'label' => 'Channel Username (without @)',
+            'fake' => true,
+            'store_in' => 'metas',
+        ]);
         $this->crud->addField([
-                        'name' => 'meta_description',
-                        'label' => trans('backpack::pagemanager.meta_description'),
-                        'fake' => true,
-                        'store_in' => 'extras',
-                    ]);
+            'name' => 'bot_username',
+            'label' => 'Bot Username (without @)',
+            'fake' => true,
+            'store_in' => 'metas',
+        ]);
         $this->crud->addField([
-                        'name' => 'meta_keywords',
-                        'type' => 'textarea',
-                        'label' => trans('backpack::pagemanager.meta_keywords'),
-                        'fake' => true,
-                        'store_in' => 'extras',
-                    ]);
-        $this->crud->addField([   // CustomHTML
-                        'name' => 'content_separator',
-                        'type' => 'custom_html',
-                        'value' => '<br><h2>'.trans('backpack::pagemanager.content').'</h2><hr>',
-                    ]);
-        $this->crud->addField([
-                        'name' => 'content',
-                        'label' => trans('backpack::pagemanager.content'),
-                        'type' => 'wysiwyg',
-                        'placeholder' => trans('backpack::pagemanager.content_placeholder'),
-                    ]);
+            'name' => 'bot_token',
+            'label' => 'Bot Token',
+            'fake' => true,
+            'store_in' => 'metas',
+        ]);
     }
 
     private function instagram()
     {
+        $this->crud->addField([   // CustomHTML
+            'name' => 'metas_separator',
+            'type' => 'custom_html',
+            'value' => '<br><h2>Extras</h2><hr>',
+        ]);
         $this->crud->addField([
-                        'name' => 'content',
-                        'label' => trans('backpack::pagemanager.content'),
-                        'type' => 'wysiwyg',
-                        'placeholder' => trans('backpack::pagemanager.content_placeholder'),
-                    ]);
+            'name' => 'username',
+            'label' => 'Instagram Username (without @)',
+            'fake' => true,
+            'store_in' => 'metas',
+        ]);
+        $this->crud->addField([
+            'name' => 'password',
+            'type' => 'password',
+            'label' => 'Instagram Password',
+            'fake' => true,
+            'store_in' => 'metas',
+        ]);
     }
 }

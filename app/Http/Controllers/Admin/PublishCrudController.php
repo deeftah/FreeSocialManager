@@ -38,11 +38,13 @@ class PublishCrudController extends CrudController
 
         $this->crud->removeField('published', 'update/create/both');
         $this->crud->addField([
-            'label' => "Client",
-            'type' => 'select',
-            'name' => 'client_id',
-            'attribute' => 'name',
-            'model' => 'App\Models\Client'
+            'label' => "Client Accounts",
+            'type' => 'select2_multiple',
+            'name' => 'clientAccounts', // the method that defines the relationship in your Model
+            'entity' => 'clientAccounts', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => 'App\Models\ClientAccount', // foreign key model
+            'pivot' => true, // on create&update, do you need to add/delete pivot table entries?
         ]);
         $this->crud->addField([
             'name' => 'status',
@@ -77,12 +79,6 @@ class PublishCrudController extends CrudController
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
 
         $this->crud->removeColumns(['image', 'description']);
-        $this->crud->setColumnDetails('client_id', [
-            'label' => "Client",
-            'type' => "select",
-            'entity' => 'client',
-            'attribute' => "name",
-        ]);
         $this->crud->setColumnDetails('status', [
             'label' => 'Active',
             'type' => 'boolean',

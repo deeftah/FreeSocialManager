@@ -19,10 +19,11 @@ class ClientAccount extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     // protected $guarded = ['id'];
-    protected $fillable = ['template', 'name', 'extras'];
+    protected $fillable = ['template', 'client_id', 'name', 'metas'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $fakeColumns = ['extras'];
+    protected $fakeColumns = ['metas'];
+    protected $casts = ['metas' => 'array'];
 
 
     /*

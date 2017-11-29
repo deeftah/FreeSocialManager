@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePublishNetworksTable extends Migration
+class CreatePublishClientAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePublishNetworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('publish_networks', function (Blueprint $table) {
+        Schema::create('publish_client_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('publish_id')->unsigned();
             $table->foreign('publish_id')->references('id')->on('publish');
-            $table->integer('network_id')->unsigned();
-            $table->foreign('network_id')->references('id')->on('networks');
+            $table->integer('client_account_id')->unsigned();
+            $table->foreign('client_account_id')->references('id')->on('client_accounts');
+            $table->boolean('published')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreatePublishNetworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publish_networks');
+        Schema::dropIfExists('publish_client_accounts');
     }
 }

@@ -17,12 +17,9 @@ class CreateClientAccountsTable extends Migration
             $table->increments('id');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->integer('network_id')->unsigned();
-            $table->foreign('network_id')->references('id')->on('networks');
             $table->string('name');
             $table->string('template');
-            $table->longText('extras');
-            $table->boolean('status');
+            $table->longText('metas');
             $table->timestamps();
             $table->softDeletes();
         });
