@@ -64,7 +64,7 @@ class PublishController extends Controller
         $username = $metas->username;
         $password = $metas->password;
         $debug = true;
-        $truncatedDebug = false;
+        $truncatedDebug = true;
 
         $photoFilename = public_path('uploads' . $result->image);
         $captionText = $result->description;
@@ -73,13 +73,14 @@ class PublishController extends Controller
         try {
             $ig->login($username, $password);
         } catch (\Exception $e) {
-            echo 'Something went wrong: ' . $e->getMessage() . "\n";
+            Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
             exit(0);
         }
         try {
-            $ig->timeline->uploadPhoto($photoFilename, ['caption' => $captionText]);
+            $upload =$ig->timeline->uploadPhoto($photoFilename, ['caption' => $captionText]);
+            Log::info(print_r($upload, true));
         } catch (\Exception $e) {
-            echo 'Something went wrong: ' . $e->getMessage() . "\n";
+            Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
         }
     }
 }
