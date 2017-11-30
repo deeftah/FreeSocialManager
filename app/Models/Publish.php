@@ -56,7 +56,7 @@ class Publish extends Model
 
     public function scopeDateSmaller($query, $formatted_date)
     {
-        return $query->whereDate('datetime', '<=', $formatted_date);
+        return $query->where('datetime', '<=', $formatted_date);
     }
 
     public function scopeNotPublished($query)

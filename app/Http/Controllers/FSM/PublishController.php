@@ -6,18 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\ClientAccount;
 use App\Models\Publish;
 use App\Models\PublishClientAccount;
-use DateTime;
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use Telegram\Bot\Api;
 
 class PublishController extends Controller
 {
     public function index()
     {
-        $date = new DateTime;
-        $date->modify('+1 minute');
-        $formatted_date = $date->format('Y-m-d H:i:s');
-        $results = Publish::dateSmaller($formatted_date)->notPublished()->get();
+        $date = Carbon::now()->addMinute(1);
+        $results = Publish::dateSmaller($date)->notPublished()->get();
         foreach ($results as $result) {
             $publishClientAccounts = $this->publishClientAccounts($result->id);
             foreach ($publishClientAccounts as $publishClientAccount) {
