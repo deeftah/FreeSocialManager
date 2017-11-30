@@ -77,7 +77,7 @@ class PublishController extends Controller
             exit(0);
         }
         try {
-            $upload =$ig->timeline->uploadPhoto($photoFilename, ['caption' => $captionText]);
+            $upload = $ig->timeline->uploadPhoto($photoFilename, ['caption' => $captionText]);
             Log::info(print_r($upload, true));
         } catch (\Exception $e) {
             Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
