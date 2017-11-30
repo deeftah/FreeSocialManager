@@ -60,11 +60,9 @@ class PublishController extends Controller
 
     public function instagram($clientAccount, $result)
     {
-        set_time_limit(0);
-        date_default_timezone_set('UTC');
-
-        $username = 'jj.sepehr';
-        $password = 'superman220123';
+        $metas = json_decode($clientAccount->metas);
+        $username = $metas->username;
+        $password = $metas->password;
         $debug = true;
         $truncatedDebug = false;
 
