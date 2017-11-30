@@ -17,22 +17,14 @@ class PublishController extends Controller
         $date = new DateTime;
         $date->modify('+1 minute');
         $formatted_date = $date->format('Y-m-d H:i:s');
-        $results = Publish::whereDate('datetime', '<=', $formatted_date)
-            ->where('published', 0)
-            ->get();
-
+        $results = Publish::dateSmaller($formatted_date)->notPublished()->get();
         foreach ($results as $result) {
             $publishClientAccounts = $this->publishClientAccounts($result->id);
             foreach ($publishClientAccounts as $publishClientAccount) {
                 $clientAccount = $this->clientAccount($publishClientAccount->client_account_id);
-                if ($clientAccount->template == "telegram") {
-                    $this->telegram($clientAccount, $result);
-                }
-                if ($clientAccount->template == "instagram") {
-                    $this->instagram($clientAccount, $result);
-                }
+                $template = $clientAccount->template;
+                $this->$template($clientAccount, $result);
             }
-
         }
     }
 
@@ -81,6 +73,7 @@ class PublishController extends Controller
             Log::info(print_r($upload, true));
         } catch (\Exception $e) {
             Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
+            exit(0);
         }
     }
 }
