@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\PublishClientAccount;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
@@ -61,7 +62,7 @@ class PublishClientAccountCrudController extends CrudController
         // ------ CRUD COLUMNS
         // $this->crud->addColumn(); // add a single column, at the end of the stack
         // $this->crud->addColumns(); // add multiple columns, at the end of the stack
-        // $this->crud->removeColumn('column_name'); // remove a column from the stack
+         $this->crud->removeColumn('logs'); // remove a column from the stack
         // $this->crud->removeColumns(['column_name_1', 'column_name_2']); // remove an array of columns from the stack
         // $this->crud->setColumnDetails('column_name', ['attribute' => 'value']); // adjusts the properties of the passed in column (by name)
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
@@ -141,6 +142,7 @@ class PublishClientAccountCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        return $id;
+        $logs = PublishClientAccount::find($id);
+        return "<div class='row justify-content-center'><div class='col-xs-10 col-xs-offset-1'><p>".$logs->logs."</p></div></div>";
     }
 }

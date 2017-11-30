@@ -49,7 +49,7 @@ class PublishController extends Controller
             'photo' => public_path('uploads' . $result->image),
             'caption' => $result->description
         ]);
-        Log::info($response->getMessageId());
+        $publishClientAccount->logs = $response->getMessageId();
         $publishClientAccount->published = 1;
         $publishClientAccount->save();
     }
@@ -69,17 +69,19 @@ class PublishController extends Controller
         try {
             $ig->login($username, $password);
         } catch (\Exception $e) {
-            Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
+            $publishClientAccount->logs = print_r($e->getMessage(), true);
+            $publishClientAccount->save();
             exit(0);
         }
         try {
             $upload = $ig->timeline->uploadPhoto($photoFilename, ['caption' => $captionText]);
-            Log::info(print_r($upload, true));
+            $publishClientAccount->logs = print_r($upload, true);
+            $publishClientAccount->published = 1;
+            $publishClientAccount->save();
         } catch (\Exception $e) {
-            Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
+            $publishClientAccount->logs = print_r($e->getMessage(), true);
+            $publishClientAccount->save();
             exit(0);
         }
-        $publishClientAccount->published = 1;
-        $publishClientAccount->save();
     }
 }
