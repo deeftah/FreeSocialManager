@@ -26,14 +26,10 @@ class PublishController extends Controller
             foreach ($publishClientAccounts as $publishClientAccount) {
                 $clientAccount = $this->clientAccount($publishClientAccount->client_account_id);
                 if ($clientAccount->template == "telegram") {
-                    $metas = json_decode($clientAccount->metas);
-                    $telegram = new Api($metas->bot_token);
-                    $response = $telegram->sendPhoto([
-                        'chat_id' => '@' . $metas->channel_username,
-                        'photo' => public_path('uploads' . $result->image),
-                        'caption' => $result->description
-                    ]);
-                    Log::info($response->getMessageId());
+                    $this->telegram($clientAccount, $result);
+                }
+                if ($clientAccount->template == "instagram") {
+                    $this->instagram($clientAccount, $result);
                 }
             }
 
@@ -48,5 +44,44 @@ class PublishController extends Controller
     public function clientAccount($client_account_id)
     {
         return ClientAccount::find($client_account_id);
+    }
+
+    public function telegram($clientAccount, $result)
+    {
+        $metas = json_decode($clientAccount->metas);
+        $telegram = new Api($metas->bot_token);
+        $response = $telegram->sendPhoto([
+            'chat_id' => '@' . $metas->channel_username,
+            'photo' => public_path('uploads' . $result->image),
+            'caption' => $result->description
+        ]);
+        Log::info($response->getMessageId());
+    }
+
+    public function instagram($clientAccount, $result)
+    {
+        set_time_limit(0);
+        date_default_timezone_set('UTC');
+
+        $username = 'jj.sepehr';
+        $password = 'superman220123';
+        $debug = true;
+        $truncatedDebug = false;
+
+        $photoFilename = public_path('uploads' . $result->image);
+        $captionText = $result->description;
+
+        $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
+        try {
+            $ig->login($username, $password);
+        } catch (\Exception $e) {
+            echo 'Something went wrong: ' . $e->getMessage() . "\n";
+            exit(0);
+        }
+        try {
+            $ig->timeline->uploadPhoto($photoFilename, ['caption' => $captionText]);
+        } catch (\Exception $e) {
+            echo 'Something went wrong: ' . $e->getMessage() . "\n";
+        }
     }
 }
