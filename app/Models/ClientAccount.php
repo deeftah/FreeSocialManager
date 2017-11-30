@@ -16,7 +16,7 @@ class ClientAccount extends Model
     */
 
     protected $table = 'client_accounts';
-    protected $primaryKey = 'id';
+//    protected $primaryKey = 'id';
     public $timestamps = true;
     // protected $guarded = ['id'];
     protected $fillable = ['template', 'client_id', 'name', 'metas'];
@@ -42,6 +42,11 @@ class ClientAccount extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function client()
+    {
+        return $this->hasOne('App\Models\Client', 'id', 'client_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

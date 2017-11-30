@@ -3,7 +3,7 @@
 // your CRUD resources and other admin routes here
 CRUD::resource('client', 'ClientCrudController');
 CRUD::resource('publish', 'PublishCrudController');
-CRUD::resource('publishNetwork', 'PublishNetworkCrudController');
+CRUD::resource('publishclientaccount', 'PublishClientAccountCrudController');
 
 // ClientAccount routes
 $controller = 'ClientAccountCrudController';

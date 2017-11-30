@@ -23,8 +23,10 @@ class PublishController extends Controller
             foreach ($publishClientAccounts as $publishClientAccount) {
                 $clientAccount = $this->clientAccount($publishClientAccount->client_account_id);
                 $template = $clientAccount->template;
-                $this->$template($clientAccount, $result);
+                $this->$template($clientAccount, $result, $publishClientAccount);
             }
+            $result->published = 1;
+            $result->save();
         }
     }
 
@@ -38,7 +40,7 @@ class PublishController extends Controller
         return ClientAccount::find($client_account_id);
     }
 
-    public function telegram($clientAccount, $result)
+    public function telegram($clientAccount, $result, $publishClientAccount)
     {
         $metas = json_decode($clientAccount->metas);
         $telegram = new Api($metas->bot_token);
@@ -48,9 +50,11 @@ class PublishController extends Controller
             'caption' => $result->description
         ]);
         Log::info($response->getMessageId());
+        $publishClientAccount->published = 1;
+        $publishClientAccount->save();
     }
 
-    public function instagram($clientAccount, $result)
+    public function instagram($clientAccount, $result, $publishClientAccount)
     {
         $metas = json_decode($clientAccount->metas);
         $username = $metas->username;
@@ -75,5 +79,7 @@ class PublishController extends Controller
             Log::alert('Something went wrong: ' . $e->getMessage() . "\n");
             exit(0);
         }
+        $publishClientAccount->published = 1;
+        $publishClientAccount->save();
     }
 }
