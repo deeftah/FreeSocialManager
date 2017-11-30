@@ -22,17 +22,11 @@ trait ClientAccountTemplates
         $this->crud->addField([   // CustomHTML
             'name' => 'metas_separator',
             'type' => 'custom_html',
-            'value' => '<br><h2>Extras</h2><hr>',
+            'value' => '<br><h2>Telegram</h2><hr> <i class="fa fa-paper-plane-o fa-2x"></i> Please create a bot in Telegram using @botfather. Then make the bot one the administrators of your channel.<hr>',
         ]);
         $this->crud->addField([
             'name' => 'channel_username',
             'label' => 'Channel Username (without @)',
-            'fake' => true,
-            'store_in' => 'metas',
-        ]);
-        $this->crud->addField([
-            'name' => 'bot_username',
-            'label' => 'Bot Username (without @)',
             'fake' => true,
             'store_in' => 'metas',
         ]);
@@ -49,7 +43,7 @@ trait ClientAccountTemplates
         $this->crud->addField([   // CustomHTML
             'name' => 'metas_separator',
             'type' => 'custom_html',
-            'value' => '<br><h2>Extras</h2><hr>',
+            'value' => '<br><h2>Instagram</h2><hr> <i class="fa fa-instagram fa-2x"></i> Instagram API does not allow the posting of Media without a phone, therefore your username and password is required for our mobile emulator to post to your account.<hr>',
         ]);
         $this->crud->addField([
             'name' => 'username',
