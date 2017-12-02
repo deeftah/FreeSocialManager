@@ -23,7 +23,7 @@ class Publish extends Model
     // protected $guarded = ['id'];
     protected $fillable = ['title', 'image', 'description', 'datetime', 'status', 'published'];
     // protected $hidden = [];
-    // protected $dates = [];
+    protected $dates = ['deleted_at'];
 
     /*
     |--------------------------------------------------------------------------

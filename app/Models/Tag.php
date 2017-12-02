@@ -23,7 +23,7 @@ class Tag extends Model
     // protected $guarded = ['id'];
      protected $fillable = ['tag', 'tag_group_id'];
     // protected $hidden = [];
-    // protected $dates = [];
+    protected $dates = ['deleted_at'];
 
     /*
     |--------------------------------------------------------------------------

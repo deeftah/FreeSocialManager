@@ -23,7 +23,7 @@ class ClientAccount extends Model
     // protected $guarded = ['id'];
     protected $fillable = ['template', 'client_id', 'name', 'metas'];
     // protected $hidden = [];
-    // protected $dates = [];
+    protected $dates = ['deleted_at'];
     protected $fakeColumns = ['metas'];
     protected $casts = ['metas' => 'array'];
 

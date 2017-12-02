@@ -23,7 +23,7 @@ class TagGroup extends Model
     // protected $guarded = ['id'];
      protected $fillable = ['name'];
     // protected $hidden = [];
-    // protected $dates = [];
+    protected $dates = ['deleted_at'];
 
     /*
     |--------------------------------------------------------------------------
