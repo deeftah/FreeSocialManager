@@ -40,15 +40,20 @@ class PublishController extends Controller
     public function telegram($clientAccount, $result, $publishClientAccount)
     {
         $metas = json_decode($clientAccount->metas);
-        $telegram = new Api($metas->bot_token);
-        $response = $telegram->sendPhoto([
-            'chat_id' => '@' . $metas->channel_username,
-            'photo' => public_path('uploads' . $result->image),
-            'caption' => $result->description
-        ]);
-        $publishClientAccount->logs = $response->getMessageId();
-        $publishClientAccount->published = 1;
-        $publishClientAccount->save();
+        try {
+            $telegram = new Api($metas->bot_token);
+            $response = $telegram->sendPhoto([
+                'chat_id' => '@' . $metas->channel_username,
+                'photo' => public_path('uploads' . $result->image),
+                'caption' => $result->description
+            ]);
+            $publishClientAccount->logs = $response->getMessageId();
+            $publishClientAccount->published = 1;
+            $publishClientAccount->save();
+        } catch (\Exception $e) {
+            $publishClientAccount->logs = $e;
+            $publishClientAccount->save();
+        }
     }
 
     public function instagram($clientAccount, $result, $publishClientAccount)
