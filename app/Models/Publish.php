@@ -21,7 +21,7 @@ class Publish extends Model
     //protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['title', 'image', 'description', 'datetime', 'status', 'published'];
+    protected $fillable = ['title', 'image', 'description', 'datetime', 'status', 'published', 'tag_group_id'];
     // protected $hidden = [];
     protected $dates = ['deleted_at'];
 
@@ -48,6 +48,11 @@ class Publish extends Model
     public function clientAccounts()
     {
         return $this->belongsToMany('App\Models\ClientAccount', 'publish_client_accounts', 'publish_id', 'client_account_id');
+    }
+
+    public function tagGroup()
+    {
+        return $this->hasOne('App\Models\TagGroup', 'id', 'tag_group_id');
     }
 
     /*

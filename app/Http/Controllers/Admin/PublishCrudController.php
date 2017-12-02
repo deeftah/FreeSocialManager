@@ -68,6 +68,14 @@ class PublishCrudController extends CrudController
             'crop' => false,
             'prefix' => 'uploads' // in case you only store the filename in the database, this text will be prepended to the database value
         ]);
+        $this->crud->addField([  // Select2
+            'label' => "Tag Group",
+            'type' => 'select2',
+            'name' => 'tag_group_id', // the db column for the foreign key
+            'entity' => 'tagGroup', // the method that defines the relationship in your Model
+            'attribute' => 'name', // foreign key attribute that is shown to user
+            'model' => "App\Models\TagGroup" // foreign key model
+        ]);
 
 
         // ------ CRUD COLUMNS
@@ -82,6 +90,14 @@ class PublishCrudController extends CrudController
         $this->crud->setColumnDetails('status', [
             'label' => 'Active',
             'type' => 'boolean',
+        ]);
+        $this->crud->setColumnDetails('tag_group_id', [
+            'label' => "Tag Group", // Table column heading
+            'type' => "select",
+            'name' => 'tag_group_id', // the column that contains the ID of that connected entity;
+            'entity' => 'tagGroup', // the method that defines the relationship in your Model
+            'attribute' => "name", // foreign key attribute that is shown to user
+            'model' => "App\Models\TagGroup", // foreign key model
         ]);
         $this->crud->setColumnDetails('published', [
             'label' => 'Published',
