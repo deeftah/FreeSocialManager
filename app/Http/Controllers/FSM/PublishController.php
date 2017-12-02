@@ -17,10 +17,19 @@ class PublishController extends Controller
         $results = Publish::dateSmaller($date)->notPublished()->get();
         foreach ($results as $result) {
             $publishClientAccounts = $this->publishClientAccounts($result->id);
+            $result_tags = [];
+            $tags = $result->tagGroup->tags;
+            foreach ($tags as $tag) {
+                $result_tags[] = '#' . $tag['tag'];
+            }
+            $result_tags = implode(' ', $result_tags);
+
             foreach ($publishClientAccounts as $publishClientAccount) {
-                $clientAccount = $this->clientAccount($publishClientAccount->client_account_id);
-                $template = $clientAccount->template;
-                $this->$template($clientAccount, $result, $publishClientAccount);
+                if ($publishClientAccount->published == 0) {
+                    $clientAccount = $this->clientAccount($publishClientAccount->client_account_id);
+                    $template = $clientAccount->template;
+                    $this->$template($clientAccount, $result, $publishClientAccount, $result_tags);
+                }
             }
             $result->published = 1;
             $result->save();
@@ -37,15 +46,18 @@ class PublishController extends Controller
         return ClientAccount::find($client_account_id);
     }
 
-    public function telegram($clientAccount, $result, $publishClientAccount)
+    public function telegram($clientAccount, $result, $publishClientAccount, $result_tags)
     {
         $metas = json_decode($clientAccount->metas);
         try {
+            $description = $result->description . '
+            
+            ' . $result_tags;
             $telegram = new Api($metas->bot_token);
             $response = $telegram->sendPhoto([
                 'chat_id' => '@' . $metas->channel_username,
                 'photo' => public_path('uploads' . $result->image),
-                'caption' => $result->description
+                'caption' => $description
             ]);
             $publishClientAccount->logs = $response->getMessageId();
             $publishClientAccount->published = 1;
@@ -56,7 +68,7 @@ class PublishController extends Controller
         }
     }
 
-    public function instagram($clientAccount, $result, $publishClientAccount)
+    public function instagram($clientAccount, $result, $publishClientAccount, $result_tags)
     {
         $metas = json_decode($clientAccount->metas);
         $username = $metas->username;
@@ -65,7 +77,7 @@ class PublishController extends Controller
         $truncatedDebug = true;
 
         $photoFilename = public_path('uploads' . $result->image);
-        $captionText = $result->description;
+        $captionText = "" . $result->description . "\n\n" . $result_tags . "";
 
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
         try {

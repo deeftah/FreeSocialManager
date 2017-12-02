@@ -31,6 +31,11 @@ class TagGroup extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Tag', 'tag_group_id', 'id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
