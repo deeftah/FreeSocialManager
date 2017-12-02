@@ -2,31 +2,28 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ClientAccount extends Model
+class Tag extends Model
 {
     use CrudTrait;
     use SoftDeletes;
 
-    /*
+     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'client_accounts';
-//    protected $primaryKey = 'id';
-    public $timestamps = true;
+    //protected $table = 'tags';
+    //protected $primaryKey = 'id';
+    // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['template', 'client_id', 'name', 'metas'];
+     protected $fillable = ['tag', 'tag_group_id'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $fakeColumns = ['metas'];
-    protected $casts = ['metas' => 'array'];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -34,20 +31,15 @@ class ClientAccount extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getTemplateName()
-    {
-        return trim(preg_replace('/(id|at|\[\])$/i', '', ucfirst(str_replace('_', ' ', $this->template))));
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
 
-    public function client()
+    public function tagGroup()
     {
-        return $this->hasOne('App\Models\Client', 'id', 'client_id');
+        return $this->hasOne('App\Models\TagGroup', 'id', 'tag_group_id');
     }
 
     /*

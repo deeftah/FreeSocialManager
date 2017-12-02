@@ -3,6 +3,8 @@
 // your CRUD resources and other admin routes here
 CRUD::resource('client', 'ClientCrudController');
 CRUD::resource('publish', 'PublishCrudController');
+CRUD::resource('tag', 'TagCrudController');
+CRUD::resource('taggroup', 'TagGroupCrudController');
 CRUD::resource('publishclientaccount', 'PublishClientAccountCrudController');
 
 // ClientAccount routes

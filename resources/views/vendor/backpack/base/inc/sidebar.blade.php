@@ -23,6 +23,8 @@
           <li><a href="{{  backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>File manager</span></a></li>
           <li><a href="{{ backpack_url('client') }}"><i class="fa fa-address-card-o"></i> <span>Clients</span></a></li>
           <li><a href="{{backpack_url('clientAccount') }}"><i class="fa fa-link"></i> <span>Client Accounts</span></a></li>
+          <li><a href="{{backpack_url('taggroup') }}"><i class="fa fa-tags"></i> <span>Tag Groups</span></a></li>
+          <li><a href="{{backpack_url('tag') }}"><i class="fa fa-tag"></i> <span>Tags</span></a></li>
           <li><a href="{{ backpack_url('publish') }}"><i class="fa fa-pencil"></i> <span>Publish</span></a></li>
           <li><a href="{{ backpack_url('publishclientaccount') }}"><i class="fa fa-pencil"></i> <span>Posts</span></a></li>
           <!-- ======================================= -->
