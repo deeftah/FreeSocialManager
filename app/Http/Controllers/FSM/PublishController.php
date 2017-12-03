@@ -33,8 +33,8 @@ class PublishController extends Controller
                     $this->$template($clientAccount, $result, $publishClientAccount, $result_tags);
                 }
             }
-//            $result->published = 1;
-//            $result->save();
+            $result->published = 1;
+            $result->save();
         }
     }
 
