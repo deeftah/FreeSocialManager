@@ -14,7 +14,7 @@ class PublishController extends Controller
     public function index()
     {
         $date = Carbon::now()->addMinute(1);
-        $results = Publish::dateSmaller($date)->notPublished()->get();
+        $results = Publish::dateSmaller($date)->active()->notPublished()->get();
         foreach ($results as $result) {
             $publishClientAccounts = $this->publishClientAccounts($result->id);
             $result_tags = [];

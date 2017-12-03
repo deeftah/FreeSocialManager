@@ -71,6 +71,11 @@ class Publish extends Model
         return $query->where('published', 0);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
