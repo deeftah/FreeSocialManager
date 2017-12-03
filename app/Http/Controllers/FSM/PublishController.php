@@ -17,12 +17,14 @@ class PublishController extends Controller
         $results = Publish::dateSmaller($date)->active()->notPublished()->get();
         foreach ($results as $result) {
             $publishClientAccounts = $this->publishClientAccounts($result->id);
-            $result_tags = [];
-            $tags = $result->tagGroup->tags;
-            foreach ($tags as $tag) {
-                $result_tags[] = '#' . $tag['tag'];
+            $result_tags = null;
+            if(isset($result->tagGroup)) {
+                $tags = $result->tagGroup->tags;
+                foreach ($tags as $tag) {
+                    $result_tags[] = '#' . $tag['tag'];
+                }
+                $result_tags = implode(' ', $result_tags);
             }
-            $result_tags = implode(' ', $result_tags);
 
             foreach ($publishClientAccounts as $publishClientAccount) {
                 if ($publishClientAccount->published == 0) {
@@ -31,8 +33,8 @@ class PublishController extends Controller
                     $this->$template($clientAccount, $result, $publishClientAccount, $result_tags);
                 }
             }
-            $result->published = 1;
-            $result->save();
+//            $result->published = 1;
+//            $result->save();
         }
     }
 
@@ -53,7 +55,9 @@ class PublishController extends Controller
             $description = $result->description . '
             
             ' . $result_tags;
+
             $telegram = new Api($metas->bot_token);
+
             $response = $telegram->sendPhoto([
                 'chat_id' => '@' . $metas->channel_username,
                 'photo' => public_path('uploads' . $result->image),
