@@ -25,7 +25,6 @@ class PublishController extends Controller
                 }
                 $result_tags = implode(' ', $result_tags);
             }
-
             foreach ($publishClientAccounts as $publishClientAccount) {
                 if ($publishClientAccount->published == 0) {
                     $clientAccount = $this->clientAccount($publishClientAccount->client_account_id);
@@ -52,9 +51,7 @@ class PublishController extends Controller
     {
         $metas = json_decode($clientAccount->metas);
         try {
-            $description = $result->description . '
-            
-            ' . $result_tags;
+            $description = $result->description;
 
             $telegram = new Api($metas->bot_token);
 
