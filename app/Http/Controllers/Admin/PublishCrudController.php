@@ -167,11 +167,21 @@ class PublishCrudController extends CrudController
         $this->crud->addFilter([ // add a "simple" filter called Published
             'type' => 'simple',
             'name' => 'published',
-            'label'=> 'Published'
+            'label' => 'Published'
         ],
             false,
-            function() { // if the filter is active (the GET parameter "published" exits)
+            function () {
                 $this->crud->addClause('published');
+            });
+
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'trashed',
+            'label' => 'Trashed'
+        ],
+            false,
+            function ($values) { // if the filter is active
+                $this->crud->query = $this->crud->query->onlyTrashed();
             });
 
         $this->crud->filters(); // gets all the filters
