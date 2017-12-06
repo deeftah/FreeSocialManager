@@ -174,6 +174,16 @@ class PublishCrudController extends CrudController
                 $this->crud->query = $this->crud->query->published();
             });
 
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'status',
+            'label' => 'Status'
+        ],
+            false,
+            function ($values) { // if the filter is active
+                $this->crud->query = $this->crud->query->active();
+            });
+
         $this->crud->addFilter([ // daterange filter
             'type' => 'date_range',
             'name' => 'from_to',
