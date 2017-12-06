@@ -91,8 +91,8 @@ class PublishCrudController extends CrudController
         $this->crud->setColumnDetails('image', [
             'label' => "Image", // Table column heading
             'type' => 'image',
-             'prefix' => 'uploads/',
-             'height' => '100px'
+            'prefix' => '/uploads/',
+            'height' => '100px'
         ]);
         $this->crud->setColumnDetails('status', [
             'label' => 'Active',
@@ -161,9 +161,9 @@ class PublishCrudController extends CrudController
         // $this->crud->addClause('withoutGlobalScopes');
         // $this->crud->addClause('withoutGlobalScope', VisibleScope::class);
         // $this->crud->with(); // eager load relationships
-         $this->crud->orderBy('datetime', 'DESC');
+        $this->crud->orderBy('datetime', 'DESC');
         // $this->crud->groupBy();
-        // $this->crud->limit();
+         $this->crud->limit(26);
     }
 
     public function store(StoreRequest $request)
