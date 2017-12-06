@@ -21,6 +21,7 @@ class PublishCrudController extends CrudController
         $this->crud->setModel('App\Models\Publish');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/publish');
         $this->crud->setEntityNameStrings('publish', 'publish');
+        $this->crud->filters(); // gets all the filters
 
         /*
         |--------------------------------------------------------------------------
@@ -74,7 +75,7 @@ class PublishCrudController extends CrudController
             'name' => 'tag_group_id', // the db column for the foreign key
             'entity' => 'tagGroup', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => "App\Models\TagGroup" // foreign key model
+            'model' => 'App\Models\TagGroup' // foreign key model
         ]);
 
 
@@ -86,7 +87,13 @@ class PublishCrudController extends CrudController
         // $this->crud->setColumnDetails('column_name', ['attribute' => 'value']); // adjusts the properties of the passed in column (by name)
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
 
-        $this->crud->removeColumns(['image', 'description']);
+        $this->crud->removeColumns(['description']);
+        $this->crud->setColumnDetails('image', [
+            'label' => "Image", // Table column heading
+            'type' => 'image',
+             'prefix' => 'uploads/',
+             'height' => '100px'
+        ]);
         $this->crud->setColumnDetails('status', [
             'label' => 'Active',
             'type' => 'boolean',
@@ -97,7 +104,7 @@ class PublishCrudController extends CrudController
             'name' => 'tag_group_id', // the column that contains the ID of that connected entity;
             'entity' => 'tagGroup', // the method that defines the relationship in your Model
             'attribute' => "name", // foreign key attribute that is shown to user
-            'model' => "App\Models\TagGroup", // foreign key model
+            'model' => 'App\Models\TagGroup', // foreign key model
         ]);
         $this->crud->setColumnDetails('published', [
             'label' => 'Published',
@@ -136,12 +143,12 @@ class PublishCrudController extends CrudController
         // Please note the drawbacks of this though:
         // - 1-n and n-n columns are not searchable
         // - date and datetime columns won't be sortable anymore
-        // $this->crud->enableAjaxTable();
+//        $this->crud->enableAjaxTable();
 
         // ------ DATATABLE EXPORT BUTTONS
         // Show export to PDF, CSV, XLS and Print buttons on the table view.
         // Does not work well with AJAX datatables.
-        // $this->crud->enableExportButtons();
+        $this->crud->enableExportButtons();
 
         // ------ ADVANCED QUERIES
         // $this->crud->addClause('active');
