@@ -164,25 +164,19 @@ class PublishCrudController extends CrudController
         // $this->crud->groupBy();
 //         $this->crud->limit();
 
-        $this->crud->addFilter([
-            'type' => 'simple',
-            'name' => 'published',
-            'label' => 'Published'
-        ],
-            false,
-            function ($values) { // if the filter is active
-                $this->crud->query = $this->crud->query->published();
-            });
-
-        $this->crud->addFilter([
-            'type' => 'simple',
+        $this->crud->addFilter([ // select2 filter
             'name' => 'status',
-            'label' => 'Active'
-        ],
-            false,
-            function ($values) { // if the filter is active
-                $this->crud->query = $this->crud->query->active();
-            });
+            'type' => 'select2',
+            'label'=> 'Status'
+        ], function() {
+            return [
+                1 => 'Active',
+                2 => 'Inactive',
+                3 => 'Deleted'
+            ];
+        }, function($value) { // if the filter is active
+             $this->crud->addClause('where', 'status', $value);
+        });
 
         $this->crud->addFilter([ // daterange filter
             'type' => 'date_range',
