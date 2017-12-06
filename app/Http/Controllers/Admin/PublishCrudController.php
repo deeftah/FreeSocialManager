@@ -161,7 +161,7 @@ class PublishCrudController extends CrudController
         // $this->crud->addClause('withoutGlobalScopes');
         // $this->crud->addClause('withoutGlobalScope', VisibleScope::class);
         // $this->crud->with(); // eager load relationships
-        $this->crud->orderBy('datetime', 'DESC');
+//        $this->crud->orderBy();
         // $this->crud->groupBy();
 //         $this->crud->limit();
     }
