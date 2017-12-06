@@ -177,7 +177,7 @@ class PublishCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'simple',
             'name' => 'status',
-            'label' => 'Status'
+            'label' => 'Active'
         ],
             false,
             function ($values) { // if the filter is active
