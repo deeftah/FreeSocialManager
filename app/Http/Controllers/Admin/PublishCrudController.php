@@ -167,15 +167,27 @@ class PublishCrudController extends CrudController
         $this->crud->addFilter([ // select2 filter
             'name' => 'status',
             'type' => 'select2',
-            'label'=> 'Status'
-        ], function() {
+            'label' => 'Status'
+        ], function () {
             return [
                 1 => 'Active',
-                2 => 'Inactive',
-                3 => 'Deleted'
+                2 => 'Inactive'
             ];
-        }, function($value) { // if the filter is active
-             $this->crud->addClause('where', 'status', $value);
+        }, function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'status', $value);
+        });
+
+        $this->crud->addFilter([ // select2 filter
+            'name' => 'published',
+            'type' => 'select2',
+            'label' => 'Published Status'
+        ], function () {
+            return [
+                0 => 'Not yet published',
+                1 => 'Published'
+            ];
+        }, function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'published', $value);
         });
 
         $this->crud->addFilter([ // daterange filter
@@ -196,7 +208,7 @@ class PublishCrudController extends CrudController
             'label' => 'Trashed'
         ],
             false,
-            function ($values) { // if the filter is active
+            function () { // if the filter is active
                 $this->crud->query = $this->crud->query->onlyTrashed();
             });
 
