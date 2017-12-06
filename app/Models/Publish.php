@@ -34,9 +34,6 @@ class Publish extends Model
     public static function boot()
     {
         parent::boot();
-        static::deleting(function ($obj) {
-            \Storage::disk('uploads')->delete($obj->image);
-        });
     }
 
     public function published($query)
