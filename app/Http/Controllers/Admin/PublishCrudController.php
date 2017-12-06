@@ -21,7 +21,6 @@ class PublishCrudController extends CrudController
         $this->crud->setModel('App\Models\Publish');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/publish');
         $this->crud->setEntityNameStrings('publish', 'publish');
-        $this->crud->filters(); // gets all the filters
 
         /*
         |--------------------------------------------------------------------------
@@ -164,6 +163,18 @@ class PublishCrudController extends CrudController
 //        $this->crud->orderBy();
         // $this->crud->groupBy();
 //         $this->crud->limit();
+
+        $this->crud->addFilter([ // select2 filter
+            'name' => 'published',
+            'type' => 'select2',
+            'label'=> 'Published'
+        ], function() {
+            return \App\Models\Publish::getEnumValuesAsAssociativeArray('published');
+        }, function($value) { // if the filter is active
+            $this->crud->addClause('where', 'published', $value);
+        });
+
+        $this->crud->filters(); // gets all the filters
     }
 
     public function store(StoreRequest $request)
