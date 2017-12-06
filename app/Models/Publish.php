@@ -31,16 +31,6 @@ class Publish extends Model
     |--------------------------------------------------------------------------
     */
 
-    public static function boot()
-    {
-        parent::boot();
-    }
-
-    public function published($query)
-    {
-        return $query->where('published', 1);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -62,6 +52,11 @@ class Publish extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    
+    public function scopeDateBigger($query, $formatted_date)
+    {
+        return $query->where('datetime', '>=', $formatted_date);
+    }
 
     public function scopeDateSmaller($query, $formatted_date)
     {
@@ -71,6 +66,11 @@ class Publish extends Model
     public function scopeNotPublished($query)
     {
         return $query->where('published', 0);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', 1);
     }
 
     public function scopeActive($query)

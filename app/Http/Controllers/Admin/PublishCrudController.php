@@ -164,14 +164,26 @@ class PublishCrudController extends CrudController
         // $this->crud->groupBy();
 //         $this->crud->limit();
 
-        $this->crud->addFilter([ // add a "simple" filter called Published
+        $this->crud->addFilter([
             'type' => 'simple',
             'name' => 'published',
             'label' => 'Published'
         ],
             false,
-            function () {
-                $this->crud->addClause('published');
+            function ($values) { // if the filter is active
+                $this->crud->query = $this->crud->query->published();
+            });
+
+        $this->crud->addFilter([ // daterange filter
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label' => 'Date range'
+        ],
+            false,
+            function ($value) { // if the filter is active, apply these constraints
+                $dates = json_decode($value);
+                $this->crud->query = $this->crud->query->dateBigger($dates->from);
+                $this->crud->query = $this->crud->query->dateSmaller($dates->to);
             });
 
         $this->crud->addFilter([
