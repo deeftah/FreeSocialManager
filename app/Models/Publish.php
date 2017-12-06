@@ -39,6 +39,11 @@ class Publish extends Model
         });
     }
 
+    public function published($query)
+    {
+        return $query->where('published', 1);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
