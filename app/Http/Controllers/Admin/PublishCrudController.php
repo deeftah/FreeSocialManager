@@ -164,15 +164,15 @@ class PublishCrudController extends CrudController
         // $this->crud->groupBy();
 //         $this->crud->limit();
 
-        $this->crud->addFilter([ // select2 filter
+        $this->crud->addFilter([ // add a "simple" filter called Published
+            'type' => 'simple',
             'name' => 'published',
-            'type' => 'select2',
             'label'=> 'Published'
-        ], function() {
-            return \App\Models\Publish::getEnumValuesAsAssociativeArray('published');
-        }, function($value) { // if the filter is active
-            $this->crud->addClause('where', 'published', $value);
-        });
+        ],
+            false,
+            function() { // if the filter is active (the GET parameter "published" exits)
+                $this->crud->addClause('published');
+            });
 
         $this->crud->filters(); // gets all the filters
     }
