@@ -74,7 +74,7 @@ class PublishCrudController extends CrudController
             'name' => 'tag_group_id', // the db column for the foreign key
             'entity' => 'tagGroup', // the method that defines the relationship in your Model
             'attribute' => 'name', // foreign key attribute that is shown to user
-            'model' => "App\Models\TagGroup" // foreign key model
+            'model' => 'App\Models\TagGroup' // foreign key model
         ]);
 
 
@@ -86,7 +86,13 @@ class PublishCrudController extends CrudController
         // $this->crud->setColumnDetails('column_name', ['attribute' => 'value']); // adjusts the properties of the passed in column (by name)
         // $this->crud->setColumnsDetails(['column_1', 'column_2'], ['attribute' => 'value']);
 
-        $this->crud->removeColumns(['image', 'description']);
+        $this->crud->removeColumns(['description']);
+        $this->crud->setColumnDetails('image', [
+            'label' => "Image", // Table column heading
+            'type' => 'image',
+            'prefix' => '/uploads/',
+            'height' => '100px'
+        ]);
         $this->crud->setColumnDetails('status', [
             'label' => 'Active',
             'type' => 'boolean',
@@ -97,7 +103,7 @@ class PublishCrudController extends CrudController
             'name' => 'tag_group_id', // the column that contains the ID of that connected entity;
             'entity' => 'tagGroup', // the method that defines the relationship in your Model
             'attribute' => "name", // foreign key attribute that is shown to user
-            'model' => "App\Models\TagGroup", // foreign key model
+            'model' => 'App\Models\TagGroup', // foreign key model
         ]);
         $this->crud->setColumnDetails('published', [
             'label' => 'Published',
@@ -136,12 +142,12 @@ class PublishCrudController extends CrudController
         // Please note the drawbacks of this though:
         // - 1-n and n-n columns are not searchable
         // - date and datetime columns won't be sortable anymore
-        // $this->crud->enableAjaxTable();
+        $this->crud->enableAjaxTable();
 
         // ------ DATATABLE EXPORT BUTTONS
         // Show export to PDF, CSV, XLS and Print buttons on the table view.
         // Does not work well with AJAX datatables.
-        // $this->crud->enableExportButtons();
+        $this->crud->enableExportButtons();
 
         // ------ ADVANCED QUERIES
         // $this->crud->addClause('active');
@@ -154,9 +160,59 @@ class PublishCrudController extends CrudController
         // $this->crud->addClause('withoutGlobalScopes');
         // $this->crud->addClause('withoutGlobalScope', VisibleScope::class);
         // $this->crud->with(); // eager load relationships
-        // $this->crud->orderBy();
+//        $this->crud->orderBy();
         // $this->crud->groupBy();
-        // $this->crud->limit();
+//         $this->crud->limit();
+
+        $this->crud->addFilter([ // select2 filter
+            'name' => 'status',
+            'type' => 'select2',
+            'label' => 'Status'
+        ], function () {
+            return [
+                1 => 'Active',
+                2 => 'Inactive'
+            ];
+        }, function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'status', $value);
+        });
+
+        $this->crud->addFilter([ // select2 filter
+            'name' => 'published',
+            'type' => 'select2',
+            'label' => 'Published Status'
+        ], function () {
+            return [
+                0 => 'Not yet published',
+                1 => 'Published'
+            ];
+        }, function ($value) { // if the filter is active
+            $this->crud->addClause('where', 'published', $value);
+        });
+
+        $this->crud->addFilter([ // daterange filter
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label' => 'Date range'
+        ],
+            false,
+            function ($value) { // if the filter is active, apply these constraints
+                $dates = json_decode($value);
+                $this->crud->query = $this->crud->query->dateBigger($dates->from);
+                $this->crud->query = $this->crud->query->dateSmaller($dates->to);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'trashed',
+            'label' => 'Trashed'
+        ],
+            false,
+            function () { // if the filter is active
+                $this->crud->query = $this->crud->query->onlyTrashed();
+            });
+
+        $this->crud->filters(); // gets all the filters
     }
 
     public function store(StoreRequest $request)
